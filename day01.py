@@ -1,3 +1,6 @@
+from perf import clock
+from timeit import timeit
+
 # Part ONE
 def get_input(file : str):
     with open(file, "r") as f:    
@@ -10,6 +13,7 @@ def only_digits(s: str) -> str:
 def value(s: str) -> int:
     return int(s[0])*10 + int(s[-1])
 
+#@clock
 def part1() -> int:
     digits = [only_digits(line) for line in get_input("day01_input.txt") ]
     numbers = [ value(d) for d in digits ]
@@ -68,10 +72,23 @@ def fix(s: str) -> str:
     first, last = first_digit(s), last_digit(s)
     return f"{first}{last}"
 
+#@clock
 def part2() -> None:
     digits = [fix(line.strip()) for line in get_input("day01_input.txt") ]
     numbers = [ value(d) for d in digits ]
     return sum(numbers)
 
 # RESULTS
-print(f"Ansers 1 = '{part1()}', and answer 2 = '{part2()}'.")
+a1 = part1()
+a2 = part2()
+
+print("\n\n")
+print(f"Ansers 1 = '{a1}', and answer 2 = '{a2}'.")
+print("\n\n")
+
+# PERF crap
+a1_speed = timeit(stmt=part1, number=100)
+print(f"part 1 took {a1_speed/100} sec.")
+
+a2_speed = timeit(stmt=part2, number=100)
+print(f"part 2 took {a2_speed/100} sec.")
