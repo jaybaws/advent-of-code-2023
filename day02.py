@@ -4,9 +4,7 @@ with open("day02_input.txt", "r") as f:
 sum_of_valid_games, sum_of_powers = 0, 0
 
 for i, l in enumerate(I):
-    game_number = i + 1
-    game_line = l.strip().split(": ")[1]
-    
+    game_number, game_line = i + 1, l.strip().split(": ")[1]
     part1_satisfied, min_red, min_green, min_blue = True, 0, 0, 0
 
     for reveal in game_line.split("; "):
