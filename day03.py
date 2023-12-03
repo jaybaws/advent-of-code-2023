@@ -10,17 +10,15 @@ def part_at(x: int, y: int) -> int:  # I did learn how to use `re.finditer`` aft
     return int([match.group() for match in re.finditer(r'\d+', I[y]) if match.start() <= x <= match.end() ][0])
 
 def gear_ratio(x: int, y: int) -> int:
-    parts_found = []
+    parts_found = set([])
     for y_offset, x_offset in [(-1, -1), (-1, 0), (-1, 1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]:
         # My puzzle input has NO '*' directly at any edges of the schematic, so omitting the try/except clause
         s = str(I[y + y_offset][x + x_offset])
         if s.isdigit():
-            part = part_at(x=x + x_offset, y=y + y_offset)
-            if part not in parts_found:
-                parts_found.append(part)
+            parts_found.add(part_at(x=x + x_offset, y=y + y_offset))
 
     if len(parts_found) == 2:
-        return parts_found[0] * parts_found[1]
+        return min(parts_found) * max(parts_found)  # Haha, stupid hack
     else:
         return 0  # Since we're summing ratio's, this is 'safe' to return 
 
