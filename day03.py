@@ -13,7 +13,7 @@ def gear_ratio(x: int, y: int) -> int:
     parts_found = []
     for y_offset, x_offset in [(-1, -1), (-1, 0), (-1, 1), (0,-1), (0,1), (1,-1), (1,0), (1,1)]:
         # My puzzle input has NO '*' directly at any edges of the schematic, so omitting the try/except clause
-        s = I[y + y_offset][x + x_offset]
+        s = str(I[y + y_offset][x + x_offset])
         if s.isdigit():
             part = part_at(x=x + x_offset, y=y + y_offset)
             if part not in parts_found:
@@ -42,7 +42,7 @@ for y, line in enumerate(I):
                             if s in S:  # For special characters
                                 valid_part_found = True
                         except IndexError as ie:
-                            pass  # (because fsck 'em!)
+                            pass  # (because f$ck 'em!)
 
                 if valid_part_found:
                     sum_of_valid_parts += int(current_number)
