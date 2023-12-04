@@ -1,12 +1,12 @@
 with open("day04_input.txt", "r") as f:
     I = f.readlines()
 
-pile_value,copies = 0, [1 for _ in range(len(I))]
+pile_value, copies = 0, [ 1 for _ in range(len(I)) ]
 for game, card in enumerate(I):
     numbers = card.split(": ")[1].split(" | ")
     winners = [ int(c) for c in numbers[0].split() ]
     stack = [ int(c) for c in numbers[1].split() ]
-    matches = len([ c for c in stack if c in winners])
+    matches = len([ c for c in stack if c in winners ])
     score = 2 ** (matches - 1) if matches > 1 else matches
     pile_value += score
 
