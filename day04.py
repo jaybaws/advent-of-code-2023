@@ -1,9 +1,7 @@
 with open("day04_input.txt", "r") as f:
     I = f.readlines()
 
-pile_value = 0
-copies = [1 for _ in range(len(I))]
-
+pile_value,copies = 0, [1 for _ in range(len(I))]
 for game, card in enumerate(I):
     numbers = card.split(": ")[1].split(" | ")
     winners = [ int(c) for c in numbers[0].split() ]
