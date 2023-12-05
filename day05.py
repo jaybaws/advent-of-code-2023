@@ -20,7 +20,7 @@ temperature_to_humidity_map = list(map(parse, substring_between(I, "temperature-
 humidity_to_location_map = list(map(parse, substring_after(I, "humidity-to-location map:\n").split("\n")))
 
 # Part 1
-def do_map(val: int, mapping: list[(int,int,int)]) -> int:
+def map_value(val: int, mapping: list[(int,int,int)]) -> int:
     for (dest_range_start, source_range_start, range_length) in mapping:
         if source_range_start <= val <= source_range_start + range_length:
             return dest_range_start + (val-source_range_start)
@@ -28,10 +28,10 @@ def do_map(val: int, mapping: list[(int,int,int)]) -> int:
     return val
 
 def seed_to_location(seed: int) -> int:
-    return do_map(do_map(do_map(do_map(do_map(do_map(do_map(seed, seed_to_soil_map_map), soil_to_fertilizer_map), fertilizer_to_water_map), water_to_light_map), light_to_temperature_map), temperature_to_humidity_map), humidity_to_location_map)
+    return map_value(map_value(map_value(map_value(map_value(map_value(map_value(seed, seed_to_soil_map_map), soil_to_fertilizer_map), fertilizer_to_water_map), water_to_light_map), light_to_temperature_map), temperature_to_humidity_map), humidity_to_location_map)
 
 print(f"Answer to part one: {min([ seed_to_location(seed) for seed in seeds ])}.")
 
 # Part 2...
-seed_ranges = [ range(v, v+seeds[i+1]) for i, v in enumerate(seeds) if i % 2 == 0 ]
+seed_ranges = [ range(v, v + seeds[i + 1]) for i, v in enumerate(seeds) if i % 2 == 0 ]
 ...
