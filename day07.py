@@ -1,12 +1,13 @@
 from typing import List
 
-def card_value(card: str, v: str) -> int: return v.find(card) + 1
+def card_value(card: str, v: str) -> int:
+    return v.find(card) + 1
 
 class Hand:
     def __init__(self, line: str):
         self.cards_str, self.bid_str = line.strip().split(" ")
 
-    def score(self, jokers : bool = False):
+    def score(self, jokers: bool = False):
         V = "J23456789T_QKA" if jokers else "_23456789TJQKA"
         joker_count = self.cards_str.count("J") if jokers else 0
         hand_score, counts, card_score_str = 0, [], ""
@@ -20,18 +21,15 @@ class Hand:
             case [4, 1]:  # Four-of-a-kind
                 hand_score = 6
                 match joker_count:
-                    case 1: hand_score = 7
-                    case 4: hand_score = 7
+                    case 1 | 4: hand_score = 7
             case [3, 2]:  # Full-house
                 hand_score = 5
                 match joker_count:
-                    case 2: hand_score = 7
-                    case 3: hand_score = 7
+                    case 2 | 3: hand_score = 7
             case [3, 1, 1]:  # Three-of-a-kind
                 hand_score = 4
                 match joker_count:
-                    case 1: hand_score = 6
-                    case 3: hand_score = 6
+                    case 1 | 3: hand_score = 6
             case [2, 2, 1]:  # Two-pair
                 hand_score = 3
                 match joker_count:
@@ -40,8 +38,7 @@ class Hand:
             case [2, 1, 1, 1]:  # One-pair
                 hand_score = 2
                 match joker_count:
-                    case 1: hand_score = 4
-                    case 2: hand_score = 4
+                    case 1 | 2: hand_score = 4
             case [1, 1, 1, 1, 1]:  # High-card
                 hand_score = 1
                 match joker_count:
