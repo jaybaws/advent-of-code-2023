@@ -1,7 +1,5 @@
 from typing import List
 
-def card_value(card: str, v: str) -> int: return v.find(card) + 1
-
 class Hand:
     def __init__(self, line: str):
         self.cards_str, self.bid_str = line.strip().split(" ")
@@ -44,7 +42,7 @@ class Hand:
                     case 1: score = "2"
 
         for c in [*self.cards_str]:
-            score += str(card_value(c, V)).zfill(2)
+            score += str(V.find(c) + 1).zfill(2)
 
         return (int(score), int(self.bid_str))
 
@@ -53,5 +51,5 @@ with open("day07_input.txt", "r") as f:
     for line in f.readlines():
         hands.append(Hand(line))
 
-for part, jokers in enumerate([False, True]):
-    print(f"Answer {part + 1}: {sum([ int(h.bid_str) * (i + 1) for i, h in enumerate(sorted(hands, key=lambda h: h.score(jokers=jokers))) ])}. ")
+for part, with_jokers in [ (1, False), (2, True) ]:
+    print(f"Answer {part}: '{sum([ int(h.bid_str) * (i + 1) for i, h in enumerate(sorted(hands, key=lambda h: h.score(jokers=with_jokers))) ])}'. ")
