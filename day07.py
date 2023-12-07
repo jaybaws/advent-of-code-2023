@@ -1,7 +1,6 @@
 from typing import List
 
-def card_value(card: str, v: str) -> int:
-    return v.find(card) + 1
+def card_value(card: str, v: str) -> int: return v.find(card) + 1
 
 class Hand:
     def __init__(self, line: str):
@@ -13,7 +12,7 @@ class Hand:
         hand_score, counts, card_score_str = 0, [], ""
 
         for c in set([*self.cards_str]):
-           counts.append(self.cards_str.count(c))
+            counts.append(self.cards_str.count(c))
         
         match sorted(counts, reverse=True):
             case [5]:  # Five-of-a-kind
