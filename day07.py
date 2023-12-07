@@ -53,8 +53,5 @@ with open("day07_input.txt", "r") as f:
     for line in f.readlines():
         hands.append(Hand(line))
 
-print(f"""
-*** ANSWERS:
-    - Part 1 = '{sum([ int(h.bid_str) * (i + 1) for i, h in enumerate(sorted(hands, key=lambda h: h.score())) ])}'.
-    - Part 2 = '{sum([ int(h.bid_str) * (i + 1) for i, h in enumerate(sorted(hands, key=lambda h: h.score(jokers=True))) ])}'.
-""")
+for part, jokers in enumerate([False, True]):
+    print(f"Answer {part + 1}: {sum([ int(h.bid_str) * (i + 1) for i, h in enumerate(sorted(hands, key=lambda h: h.score(jokers=jokers))) ])}. ")
