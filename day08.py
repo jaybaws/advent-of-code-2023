@@ -1,6 +1,8 @@
 from math import gcd
 from itertools import cycle
+
 with open("day08_input.txt", "r") as f: I = f.readlines()
+
 directions = [ 0 if d == "L" else 1 for d in [ *I[0].strip() ] ]
 nodes = { n[0:3]:(n[7:10], n[12:15]) for n in I[2:] }
 
