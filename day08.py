@@ -16,8 +16,7 @@ for i, direction in enumerate(cycle(directions)):
 
 # Part two
 trips = []
-for node in [ n for n in nodes.keys() if n.endswith('A') ]:
-    at_node = node
+for at_node in [ n for n in nodes.keys() if n.endswith('A') ]:
     for i, direction in enumerate(cycle(directions)):
         at_node = nodes[at_node][direction]
         if at_node.endswith("Z"):
