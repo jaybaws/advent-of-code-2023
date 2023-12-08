@@ -22,8 +22,8 @@ for node in [ n for n in nodes.keys() if n.endswith('A') ]:
             trips.append(i + 1)
             break
 
-lcm = trips.pop()
-for num in trips:
-    lcm = lcm * num // gcd(lcm, num)
+lcm = trips[0]
+for trip in trips[1:]:
+    lcm = lcm * trip // gcd(lcm, trip)
 
 print(f"Answer 2: {lcm}")
