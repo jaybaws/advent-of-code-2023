@@ -1,4 +1,13 @@
 with open("day10_input.txt", "r") as f: M = [ [*l] for l in f.read().splitlines() ]
+D = {
+    "|": ((-1,0),(+1,0)),
+    "-": ((0,-1),(0,+1)),
+    "L": ((-1,0),(0,+1)),
+    "J": ((-1,0),(0,-1)),
+    "7": ((+1,0),(0,-1)),
+    "F": ((0,+1),(+1,0)),
+    "S": ((0,+1),(+1,0))
+}
 
 start = None
 for r, row in enumerate(M):
@@ -10,49 +19,15 @@ r, c = start
 loop = [ ]
 while True:
     loop.append((r,c))
-    match (M[r][c]):
-        case "|": 
-            if not (r-1,c) in loop:
-                r -= 1
-            elif not (r+1,c) in loop:
-                r += 1
-            else:
-                break
-        case "-":
-            if not (r,c-1) in loop:
-                c -= 1
-            elif not (r,c+1) in loop:
-                c += 1
-            else:
-                break
-        case "L":
-            if not (r-1,c) in loop:
-                r -= 1
-            elif not (r,c+1) in loop:
-                c += 1
-            else:
-                break
-        case "J":
-            if not (r-1,c) in loop:
-                r -= 1
-            elif not (r,c-1) in loop:
-                c -= 1
-            else:
-                break
-        case "7":
-            if not (r+1,c) in loop:
-                r += 1
-            elif not (r,c-1) in loop:
-                c -= 1
-            else:
-                break
-        case "F" | "S":
-            if not (r,c+1) in loop:
-                c += 1
-            elif not (r+1,c) in loop:
-                r += 1
-            else:
-                break
+    ((ro1,co1),(ro2,co2)) = D[M[r][c]]
+    if not (r+ro1,c+co1) in loop:
+        r += ro1
+        c += co1
+    elif not (r+ro2,c+co2) in loop:
+        r += ro2
+        c += co2
+    else:
+        break
 
 ans1 = len(loop) // 2 
 
@@ -60,7 +35,7 @@ ans2 = 0
 for r in range(len(M)):
     for c in range(len(M[r])):
         if not (r,c) in loop:
-            num_intersects = len([ (y,x) for (y,x) in loop if y == r and x >= c and M[y][x] in ["|", "L", "J"] ])
+            num_intersects = len([ (y,x) for (y,x) in loop if y == r and x > c and M[y][x] in ["|", "L", "J"] ])
             if num_intersects % 2 != 0:
                 ans2 += 1
 
