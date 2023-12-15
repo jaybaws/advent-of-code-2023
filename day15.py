@@ -3,35 +3,23 @@ with open("day15_input.txt", "r") as f: I = f.readline().strip().split(",")
 def hash(s: str) -> int:
     current_value = 0
     for c in s:
-        current_value += ord (c)
-        current_value *= 17
-        current_value = current_value % 256
+        current_value = (17 * (current_value + ord(c))) % 256
     return current_value
 
-ans1 = sum(list(map(hash, I)))
-
-ans2 = 0
-boxes = [ {} for i in range(256) ]
-for op in I:
-    label = "".join([ c for c in op if c.isalpha() ])
+focusing_power, boxes = 0, [ {} for i in range(256) ]
+for operation in I:
+    label = "".join([ c for c in operation if c.isalpha() ])
     box_num = hash(label)
-
-    if "=" in op:
-        focal_length = int(op[-1])
-        if label not in boxes[box_num]:  # Add
-            boxes[box_num][label] = focal_length
-        else:  # Replace
-            boxes[box_num][label] = focal_length
-
-    elif "-" in op:  # Remove
+    if "=" in operation:  # Add/replace
+        boxes[box_num][label] = int(operation[-1])
+    elif "-" in operation:  # Remove
         if label in boxes[box_num]:
             del boxes[box_num][label]
 
 for box_number, box in enumerate(boxes):
-    if box != {}:
-        for slot, label in enumerate(box.keys()):
-            focal_length = box[label]
-            lens_strength = (box_number+1) * (slot+1) * focal_length
-            ans2+= lens_strength
+    for slot_number, label in enumerate(box.keys()):
+        focal_length = box[label]
+        lens_strength = (box_number + 1) * (slot_number + 1) * focal_length
+        focusing_power+= lens_strength
 
-print(f"ANSWERS -> part1=({ans1}) part2=({ans2}).")
+print(f"ANSWERS -> part1=({sum(list(map(hash, I)))}) part2=({focusing_power}).")
