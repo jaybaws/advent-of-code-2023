@@ -16,23 +16,22 @@ def energy(x, y, dx, dy) -> int:
         if 0 <= x < W and 0 <= y < H:
             s = M[y][x]
             if s == "." or (s == "-" and dx != 0) or (s == "|" and dy != 0):
-                if ((x, y), (dx, dy)) not in tiles_seen:
-                    tiles_seen.add(((x, y), (dx, dy)))
-                    tiles_to_consider.append(((x, y), (dx, dy)))
+                pass
             elif s == "/":
                 dy, dx = -dx, -dy
-                if ((x, y), (dx, dy)) not in tiles_seen:
-                    tiles_seen.add(((x, y), (dx, dy)))
-                    tiles_to_consider.append(((x, y), (dx, dy)))
             elif s == "\\":
                 dy, dx = dx, dy
-                if ((x, y), (dx, dy)) not in tiles_seen:
-                    tiles_seen.add(((x, y), (dx, dy)))
-                    tiles_to_consider.append(((x, y), (dx, dy)))
-            else:
-                for dy, dx in [(1, 0), (-1, 0)] if s == "|" else [(0, 1), (0, -1)]:
-                    if ((x, y), (dx, dy)) not in tiles_seen:
-                        tiles_seen.add(((x, y), (dx, dy)))
+
+            if ((x, y), (dx, dy)) not in tiles_seen:
+                tiles_seen.add(((x, y), (dx, dy)))
+                match s:
+                    case "-":
+                        tiles_to_consider.append(((x, y), (-1, 0)))
+                        tiles_to_consider.append(((x, y), (1, 0)))
+                    case "|":
+                        tiles_to_consider.append(((x, y), (0, -1)))
+                        tiles_to_consider.append(((x, y), (0, 1)))
+                    case _:
                         tiles_to_consider.append(((x, y), (dx, dy)))
 
     return len(set([ (x, y) for ((x, y), (_, _)) in tiles_seen ]))
