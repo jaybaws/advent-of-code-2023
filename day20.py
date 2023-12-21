@@ -44,7 +44,7 @@ class FlipFlop(Module):
 
 class Conjunction(Module):
     def do_handle(self, p: Pulse, src: str) -> List[Tuple[str, Pulse]]:
-        if sum([1 for ins in inputs[self.name] if self.last_signals[ins] is Pulse.LO] ) == 0:
+        if len([ 1 for ins in inputs[self.name] if self.last_signals[ins] is Pulse.LO ]) == 0:
             for c in self.connections:
                 yield (c, Pulse.LO)
         else:
@@ -69,7 +69,7 @@ with open("day20_input.txt", "r") as f:
                 inputs[dest] = []
             inputs[dest].append(name)
 
-    for k in [ k for k in inputs.keys() if k not in modules.keys()]:
+    for k in [ k for k in inputs.keys() if k not in modules.keys() ]:
         modules[k] = BroadCast(k, [])
 
 for attempt in range(1_000):
@@ -80,6 +80,6 @@ for attempt in range(1_000):
         for dest_name, dest_pulse in m.handle(p, src_mod_name):
             q.append((dest_name, dest_pulse, mod_name))
 
-ans1 = sum([ mod.pulses_taken()[0] for _, mod in modules.items()]) * sum([ mod.pulses_taken()[1] for _, mod in modules.items()])
+ans1 = sum([ mod.pulses_taken()[0] for _, mod in modules.items() ]) * sum([ mod.pulses_taken()[1] for _, mod in modules.items() ])
 
 print(f"ANSWERS -> part1=({ans1}) part2=({None}).")
